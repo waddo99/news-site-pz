@@ -13,6 +13,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get(
+    '/',
+    [\App\Http\Controllers\HomeController::class, 'index']
+)->name('home');
+
+Route::get(
+    '/local',
+    [\App\Http\Controllers\HomeController::class, 'local']
+)->name('local');
+
+Route::get(
+    '/global',
+    [\App\Http\Controllers\HomeController::class, 'global']
+)->name('global');
+
+
+
+Route::resource('article', '\App\Http\Controllers\ArticleController');
