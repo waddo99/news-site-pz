@@ -8,6 +8,7 @@ use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -18,7 +19,11 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::with(['owner'])->get();
+        if($this->isAdmin()) {
+            $articles = Article::with(['owner'])->get();
+        } else {
+            $articles = Article::where('owner_id', Auth::user()->id)->with(['owner'])->get();
+        }
 
         return view('article.index')->with(compact('articles'));
     }
@@ -31,6 +36,7 @@ class ArticleController extends Controller
     public function create()
     {
         $categories = Category::get()->pluck('name', 'id');
+
         return view('article.create')->with(compact('categories'));
     }
 
@@ -47,7 +53,7 @@ class ArticleController extends Controller
             'category_id' => $request->get('category'),
             'summary' => $request->get('summary'),
             'image_path' => '',
-            'owner_id' => 1,
+            'owner_id' => Auth::user()->id,
             'text' => $request->get('text'),
             'active' => $request->has('active') ? 1 : 0,
         ]);
@@ -59,7 +65,7 @@ class ArticleController extends Controller
             $article->save();
         }
 
-        $this->addToLog($article->id, 1, 'create');
+        $this->addToLog($article->id, Auth::user()->id, 'create');
 
         return redirect()->route('article.show', [ 'article' => $article->id]);
     }
@@ -72,7 +78,7 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = Article::find($id);
+        $article = Article::where('id', $id)->where('active', 1)->first();
 
         return view('article.show')->with(compact('article'));
     }
@@ -87,6 +93,10 @@ class ArticleController extends Controller
     {
         $article = Article::find($id);
         $categories = Category::get()->pluck('name', 'id');
+        if (!($this->isAdmin() || ($article->owner_id == Auth::user()->id))){
+            $article = null;
+        }
+
         return view('article.edit')->with(compact('article', 'categories'));
     }
 
@@ -112,7 +122,7 @@ class ArticleController extends Controller
         }
         $article->save();
 
-        $this->addToLog($article->id, 1, 'update', $this->formatRequest($request->all()));
+        $this->addToLog($article->id, Auth::user()->id, 'update', $this->formatRequest($request->all()));
 
         return redirect()->route('article.index')
             ->with('success', 'Article has been successfully updated.');
@@ -129,11 +139,16 @@ class ArticleController extends Controller
     {
         $article = Article::find($id);
         $data = $article->getAttributes();
-        $this->addToLog($article->id, 1, 'delete', $this->formatRequest($data));
+        $this->addToLog($article->id, Auth::user()->id, 'delete', $this->formatRequest($data));
 
         $article->delete();
 
         return redirect()->route('article.index')
             ->with('success', 'Article has been successfully deleted.');
+    }
+
+    protected function isAdmin()
+    {
+        return (Auth::user()->role->first()->role === 'admin');
     }
 }

@@ -2,16 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+// ========================================= Public =========================================
 
 Route::get(
     '/',
@@ -28,6 +19,15 @@ Route::get(
     [\App\Http\Controllers\HomeController::class, 'global']
 )->name('global');
 
+// ========================================= Authorized users only =========================================
+
+Route::resource('article', '\App\Http\Controllers\ArticleController')->except([ 'show' ])->middleware(['auth']);
+//Route::resource('article', '\App\Http\Controllers\ArticleController')->middleware(['auth']);
+
+Route::get(
+    '/article/{article}',
+    [\App\Http\Controllers\ArticleController::class, 'show']
+)->name('article.show');
 
 
-Route::resource('article', '\App\Http\Controllers\ArticleController');
+require __DIR__.'/auth.php';

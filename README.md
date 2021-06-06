@@ -1,3 +1,5 @@
+# Installation
+
 1. On ubuntu (20.04)
 1. Install composer (getcomposer.org)
 1. Install git
@@ -19,3 +21,13 @@
 1. Run `php artisan storage:link`
 1. Go to the project folder and run `php artisan serve`
 1. Go to http://127.0.0.1:8000
+
+# Code
+
+## Code that is from other packages
+
+### `laravel/breeze` classes and views
+
+Views: everything under `resources/views/auth` and everything under `resources/views/layouts`.
+Classes: everything under `app/Http/Controllers/Auth`
+Routes: `auth.php` and `web.reeeze.php`
