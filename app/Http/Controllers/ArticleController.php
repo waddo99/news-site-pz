@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArticleCreateRequest;
+use App\Http\Requests\ArticleUpdateRequest;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -37,9 +40,28 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArticleCreateRequest $request)
     {
-        //
+        $article = new Article([
+            'title' => $request->get('title'),
+            'category_id' => $request->get('category'),
+            'summary' => $request->get('summary'),
+            'image_path' => '',
+            'owner_id' => 1,
+            'text' => $request->get('text'),
+            'active' => $request->has('active') ? 1 : 0,
+        ]);
+        $article->save();
+        if($request->has('image')) {
+            $fileName = 'image_' . $article->id . '.' . $request->file('image')->getClientOriginalExtension();
+            $path = $request->file('image')->storeAs('public', $fileName);
+            $article->image_path = $fileName;
+            $article->save();
+        }
+
+        $this->addToLog($article->id, 1, 'create');
+
+        return redirect()->route('article.show', [ 'article' => $article->id]);
     }
 
     /**
@@ -75,9 +97,26 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ArticleUpdateRequest $request, $id)
     {
-        //
+        $article = Article::find($id);
+        $article->title = $request->get('title');
+        $article->category_id = $request->get('category');
+        $article->summary = $request->get('summary');
+        $article->text = $request->get('text');
+        $article->active = $request->has('active') ? 1 : 0;
+        if($request->has('image')) {
+            $fileName = 'image_' . $article->id . '.' . $request->file('image')->getClientOriginalExtension();
+            $path = $request->file('image')->storeAs('public', $fileName);
+            $article->image_path = $fileName;
+        }
+        $article->save();
+
+        $this->addToLog($article->id, 1, 'update', $this->formatRequest($request->all()));
+
+        return redirect()->route('article.index')
+            ->with('success', 'Article has been successfully updated.');
+
     }
 
     /**
@@ -88,6 +127,13 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $article = Article::find($id);
+        $data = $article->getAttributes();
+        $this->addToLog($article->id, 1, 'delete', $this->formatRequest($data));
+
+        $article->delete();
+
+        return redirect()->route('article.index')
+            ->with('success', 'Article has been successfully deleted.');
     }
 }

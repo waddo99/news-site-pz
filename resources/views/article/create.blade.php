@@ -7,7 +7,7 @@
     @include('layout._back')
     @include('layout._errors')
 
-    <form method="POST" action="{{ route('article.store') }}">
+    <form method="POST" action="{{ route('article.store') }}" enctype="multipart/form-data">
         @csrf
 
         @include('article._form')

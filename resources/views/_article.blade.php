@@ -3,5 +3,5 @@
         <img class="img-fluid mw-100 pop" src="{{ asset('storage') . '/' .  $article->image_path}}" style="width: 367px;"/>
         <p class="fs-4 fw-bold">{{ $article->title }}</p>
     </a>
-    {{ $article->summary}}
+    {!! $article->summary !!}
 </div>

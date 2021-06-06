@@ -10,14 +10,18 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categories = Category::with(['articles'])->get();
+        $categories = Category::with(['articles' => function($q){
+            $q->where('articles.active', '=', 1);
+        }])->get();
 
         return view('home')->with(compact('categories'));
     }
 
     public function category($category)
     {
-        $category = Category::with(['articles'])->where('id', $this->getCategoryID($category))->first();
+        $category = Category::with(['articles'=> function($q){
+            $q->where('articles.active', '=', 1);
+        }])->where('id', $this->getCategoryID($category))->first();
 
         return view('category')->with(compact('category'));
     }

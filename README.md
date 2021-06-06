@@ -2,6 +2,7 @@
 1. Install composer (getcomposer.org)
 1. Install git
 1. Install php-fpm
+   (check if post_max_size is at least 20M alos check if upload_max_filesize is at least 5M in cli/php.ini)
 1. Install mysql server
 1. Create a database and a user for that database   
 1. Pull from github: git pull https://github.com/waddo99/news-site-pz.git

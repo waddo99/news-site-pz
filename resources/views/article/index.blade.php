@@ -38,7 +38,7 @@
                     <tr  @if($article->active == 0) class="table-danger" @endif>
                         <td>{{$article->title}}</td>
                         <td>{{$article->category->description}}</td>
-                        <td>{{$article->summary}}</td>
+                        <td>{!! $article->summary !!}</td>
                         <td>{{$article->updated_at}}</td>
                         <td>{{$article->created_at}}</td>
                         <td class="text-center">
@@ -83,9 +83,9 @@
                 pageLength: 25
             });
 
-            /*$(".alert").delay(5000).slideUp(200, function () {
+            $(".alert").delay(5000).slideUp(200, function () {
                 $(this).alert('close');
-            });*/
+            });
         });
     </script>
 @endsection

@@ -15,11 +15,12 @@
                    type="text"
                    name="title"
                    id="title"
-                   value="{{ $article->title ?? '' }}"
+                   value="{{ old('title') ?? $article->title ?? '' }}"
             />
         </div>
     </div>
 </div>
+
 
 <div class="row justify-content-md-center">
     <div class="col-1 fw-bold fs-5">
@@ -37,6 +38,22 @@
 
 <div class="row justify-content-md-center">
     <div class="col-1 fw-bold fs-5">
+        <label>Image</label>
+    </div>
+    <div class="col-9 my-1">
+        <div class="my-1" >
+            @if(isset($article))
+                <img class="img-fluid mw-100 pop my-1" src="{{ asset('storage') . '/' .  $article->image_path}}" style="width: 367px;"/>
+            @endif
+        </div>
+        <div class="custom-file">
+            <input name="image" id="image" type="file" class="custom-file-input form-control @if($errors->has('image'))is-invalid @endif"/>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="col-1 fw-bold fs-5">
         <label>Summary</label>
     </div>
     <div class="col-9 my-1">
@@ -44,7 +61,7 @@
             class="form-control @if($errors->has('summary'))is-invalid @endif"
             name="summary"
             id="summary"
-        >{{ $article->summary ?? '' }}</textarea>
+        >{{ old('summary') ?? $article->summary ??  '' }}</textarea>
     </div>
 </div>
 
@@ -57,7 +74,7 @@
             class="form-control @if($errors->has('text'))is-invalid @endif"
             name="text"
             id="text"
-        >{{ $article->text ?? '' }}</textarea>
+        >{{ old('text') ?? $article->text ?? '' }}</textarea>
     </div>
 </div>
 
@@ -104,6 +121,13 @@
         $('#active').bootstrapToggle({
             on: 'Show',
             off: 'Hide'
+        });
+
+        $(document).ready(function () {
+            $("#image").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });
         });
 
     </script>
