@@ -32,6 +32,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        if(Auth::check()) {
+            if (\Auth::user()->role->first()->role === 'disabled') {
+                $this->destroy($request);
+                return redirect()->route('home')->with('warning', 'Permission denied. Your account has expired.');
+            }
+        }
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

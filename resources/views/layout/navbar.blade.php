@@ -14,18 +14,22 @@
                     <a class="nav-link {{ Request::is('publish') ? ' active' : '' }}" href="{{ route('global') }}">Global</a>
                 </li>
 
-                {{--  If atuhtenticed --}}
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('user') ? ' active' : '' }}" href="{{ route('article.index') }}">Edit Articles</a>
-                </li>
+                @if(Auth::check())
+                    {{--  If atuhtenticed --}}
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('user') ? ' active' : '' }}" href="{{ route('article.index') }}">Edit Articles</a>
+                    </li>
 
-                {{--  If atuhtenticed and admin--}}
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('log') ? ' active' : '' }}" href="">Logs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('log') ? ' active' : '' }}" href="">Administration</a>
-                </li>
+                    @if(Auth::user()->role->first()->role === 'admin')
+                        {{--  If atuhtenticed and admin--}}
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('log') ? ' active' : '' }}" href="{{ route('log') }}">Logs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('admin') ? ' active' : '' }}" href="{{ route('user.index') }}">Administration</a>
+                        </li>
+                    @endif
+                @endif
 
             </ul>
             <form class="d-flex">

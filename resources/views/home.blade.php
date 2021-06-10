@@ -4,6 +4,8 @@
 
 @section('content')
 
+    @include('layout._flash')
+
     <div class="container-sm mx-auto">
     @foreach($categories as $category)
         <h1>{{ $category->description }}</h1>
@@ -16,3 +18,13 @@
     @endforeach
     </div>
 @stop
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $(".alert").delay(5000).slideUp(200, function () {
+                $(this).alert('close');
+            });
+        });
+    </script>
+@endsection

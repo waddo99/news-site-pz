@@ -21,8 +21,36 @@ Route::get(
 
 // ========================================= Authorized users only =========================================
 
-Route::resource('article', '\App\Http\Controllers\ArticleController')->except([ 'show' ])->middleware(['auth']);
-//Route::resource('article', '\App\Http\Controllers\ArticleController')->middleware(['auth']);
+Route::middleware(['auth'])->group(function () {
+    Route::get(
+        '/log',
+        [\App\Http\Controllers\LogController::class, 'index']
+    )->name('log');
+    Route::post(
+        '/log',
+        [\App\Http\Controllers\LogController::class, 'index']
+    )->name('log.search');
+
+    Route::resource('article', '\App\Http\Controllers\ArticleController')->except(['show']);
+
+    Route::get(
+        '/user',
+        [\App\Http\Controllers\UserController::class, 'index']
+    )->name('user.index');
+    Route::get(
+        '/user/{user}/edit',
+        [\App\Http\Controllers\UserController::class, 'edit']
+    )->name('user.edit');
+    Route::put(
+        '/user/{user}',
+        [\App\Http\Controllers\UserController::class, 'update']
+    )->name('user.update');
+    Route::get(
+        '/user/role/{role}',
+        [\App\Http\Controllers\UserController::class, 'setRole']
+    )->name('user.set_role');
+
+});
 
 Route::get(
     '/article/{article}',
@@ -30,4 +58,5 @@ Route::get(
 )->name('article.show');
 
 
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';

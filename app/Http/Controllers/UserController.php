@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('name')->with(['role'])->get();
+        if(\Auth::user()->role->first()->role === 'admin') {
+            $users = User::orderBy('name')->with(['role'])->get();
 
-        return view('user.index')->with(compact('users'));
+            return view('user.index')->with(compact('users'));
+        }
+
+        return redirect()->route('home')->with('warning', 'Permission denied');
     }
 
     public function edit($id)

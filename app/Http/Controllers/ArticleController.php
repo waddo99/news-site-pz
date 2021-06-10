@@ -78,7 +78,7 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = Article::where('id', $id)->where('active', 1)->first();
+        $article = Article::with(['owner'])->where('id', $id)->where('active', 1)->first();
 
         return view('article.show')->with(compact('article'));
     }

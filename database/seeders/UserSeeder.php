@@ -18,7 +18,15 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Admin User',
             'email' => 'admin.user@site.com',
-            'password' => 'SuperPassword',
+            'password' => Hash::make('SuperPassword'), // SuperPassword
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'Editor User',
+            'email' => 'editor.user@site.com',
+            'password' => Hash::make('SuperDuperPassword'), // SuperDuperPassword
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
