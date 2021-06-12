@@ -36,8 +36,9 @@ Sva instalacija se odvija unutar terminala u Ubuntu OS-u.
     1. Ovisno o veličini slika potrebno je promijeniti dozvoljenu veličinu datoteka 
        koje se smiju uploadati:
        
-        Kao `root` u datoteci `/etc/php/7.4/cli/php.ini` provjeriti je li `post_max_size` barem *20M* i provjeriti je li `upload_max_filesize` barem *5M*
-        Ako namjeravat koristit `nginx` kao HTTP server iste postavke je potrebno provjeriti i u datoteci
+        Kao `root` u datoteci `/etc/php/7.4/cli/php.ini` provjeriti je li `post_max_size` barem *20M* i provjeriti je li `upload_max_filesize` barem *5M*.
+        
+        Ako namjeravate koristit `nginx` kao HTTP server iste postavke je potrebno provjeriti i u datoteci
        `/etc/php/7.4/fpm/php.ini`
 1. Osigurati postojanje paketa `php-mysql`:
     1. provjera: `dpkg -l |grep php-mysql`
