@@ -18,9 +18,7 @@ class ArticleSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1,10) as $i) {
-
-            $imageNumber = $faker->numberBetween($min = 1, $max = 10);
+        foreach (range(1,5) as $i) {
             $imagePath = 'image' . $i . '.jpg';
 
             DB::table('articles')->insert([
@@ -28,7 +26,23 @@ class ArticleSeeder extends Seeder
                 'summary' => $faker->text($maxNbChars = 100),
                 'text' => $faker->text($maxNbChars = 2000),
                 'image_path' => $imagePath,
-                'category_id' => $faker->numberBetween($min = 1, $max = 2),
+                'category_id' => 1,
+                'owner_id' => 1,
+                'active' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
+
+        foreach (range(1,5) as $i) {
+            $imagePath = 'image' . $i . '.jpg';
+
+            DB::table('articles')->insert([
+                'title' => $faker->text($maxNbChars = 30),
+                'summary' => $faker->text($maxNbChars = 100),
+                'text' => $faker->text($maxNbChars = 2000),
+                'image_path' => $imagePath,
+                'category_id' => 2,
                 'owner_id' => 1,
                 'active' => 1,
                 'created_at' => Carbon::now(),

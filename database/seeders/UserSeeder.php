@@ -30,5 +30,13 @@ class UserSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
+
+        DB::table('users')->insert([
+            'name' => 'Disabled User',
+            'email' => 'disabled.user@site.com',
+            'password' => Hash::make('SuperDuperPassword2'), // SuperDuperPassword
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
     }
 }
