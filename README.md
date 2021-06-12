@@ -27,16 +27,24 @@ Sva instalacija se odvija unutar terminala u Ubuntu OS-u.
 1. Osigurati postojanje paketa `mysql-server`:
     1. provjera: `dpkg -l |grep mysql-server`
     1. instalacija: `sudo apt install mysql-server`
+1. Osigurati da servis za bazu radi:
+   1. provjera: `sudo service mysql status`
+   1. pokretanje: `sudo service mysql start` 
 1. Osigurati postojanje paketa `php-fpm` (najmanje verzije 7.4):
     1. provjera: `dpkg -l |grep php-fpm`
     1. instalacija: `sudo apt install php-fpm`
     1. Ovisno o veličini slika potrebno je promijeniti dozvoljenu veličinu datoteka 
        koje se smiju uploadati:
        
-        U datoteci `/etc/php/7.4/cli/php.ini` provjeriti je li `post_max_size` barem *20M* i provjeriti je li `upload_max_filesize` barem *5M*
+        Kao `root` u datoteci `/etc/php/7.4/cli/php.ini` provjeriti je li `post_max_size` barem *20M* i provjeriti je li `upload_max_filesize` barem *5M*
         Ako namjeravat koristit `nginx` kao HTTP server iste postavke je potrebno provjeriti i u datoteci
        `/etc/php/7.4/fpm/php.ini`
-1. Instalirati Composer po uputama na [getcomposer.org](getcomposer.org)
+1. Osigurati postojanje paketa `php-mysql`:
+    1. provjera: `dpkg -l |grep php-mysql`
+    1. instalacija: `sudo apt install php-mysql`       
+1. Osigurati postojanje paketa `composer`:
+   1. porvjera: `composer --version`
+   1. instalacija: po uputama na [getcomposer.org](https://getcomposer.org/download/)
 1. Koristeći proizvoljan alat, napraviti praznu mySQL bazu podataka i korisnika za nju
 
 ### Kloniranje repozitorija
@@ -47,7 +55,8 @@ Sva instalacija se odvija unutar terminala u Ubuntu OS-u.
 
 ### Konfiguracija aplikacije
 
-1. (Unutra proizvoljnog editora) Ući u datoteku `news-site-pz`    
+1. (Unutra proizvoljnog editora) Ući u datoteku `news-site-pz`   
+1. Kopirati predložak *environment*-a u datoateku naziva `.env` (`cp .env.example .env`)    
 1. U proizvoljnom editoru otvoriti `.env` datoteku i napraviti sljedeće:
    
    1. Pronaći `DB_DATABASE` i upisati naziv baze podataka koja je napravljena u koraku kreiranja baze 

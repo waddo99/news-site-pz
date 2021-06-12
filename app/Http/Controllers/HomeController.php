@@ -13,7 +13,7 @@ class HomeController extends Controller
         $categories = Category::with(['articles' => function($q){
             $q->where('articles.active', '=', 1);
         }])->get();
-
+        
         return view('home')->with(compact('categories'));
     }
 

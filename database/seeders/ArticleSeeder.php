@@ -34,7 +34,7 @@ class ArticleSeeder extends Seeder
             ]);
         }
 
-        foreach (range(1,5) as $i) {
+        foreach (range(6,10) as $i) {
             $imagePath = 'image' . $i . '.jpg';
 
             DB::table('articles')->insert([
