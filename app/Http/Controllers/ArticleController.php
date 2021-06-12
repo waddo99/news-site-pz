@@ -67,7 +67,13 @@ class ArticleController extends Controller
 
         $this->addToLog($article->id, Auth::user()->id, 'create');
 
-        return redirect()->route('article.show', [ 'article' => $article->id]);
+        if($article->active === 1) {
+            return redirect()->route('article.show', ['article' => $article->id ])
+                ->with('success', 'Article has been successfully updated.');
+        }
+
+        return redirect()->route('article.index')
+            ->with('success', 'Article has been successfully updated.');
     }
 
     /**
@@ -138,7 +144,6 @@ class ArticleController extends Controller
 
         return redirect()->route('article.index')
             ->with('success', 'Article has been successfully updated.');
-
     }
 
     /**
