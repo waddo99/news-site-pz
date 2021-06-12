@@ -43,7 +43,7 @@ Sva instalacija se odvija unutar terminala u Ubuntu OS-u.
     1. provjera: `dpkg -l |grep php-mysql`
     1. instalacija: `sudo apt install php-mysql`       
 1. Osigurati postojanje paketa `composer`:
-   1. porvjera: `composer --version`
+   1. provjera: `composer --version`
    1. instalacija: po uputama na [getcomposer.org](https://getcomposer.org/download/)
 1. Koristeći proizvoljan alat, napraviti praznu mySQL bazu podataka i korisnika za nju
 
