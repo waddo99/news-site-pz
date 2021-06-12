@@ -34,7 +34,7 @@ class ArticleSeeder extends Seeder
             ]);
         }
 
-        foreach (range(6,10) as $i) {
+        foreach (range(6,9) as $i) {
             $imagePath = 'image' . $i . '.jpg';
 
             DB::table('articles')->insert([
@@ -49,5 +49,18 @@ class ArticleSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ]);
         }
+
+        // Editor article
+        DB::table('articles')->insert([
+            'title' => $faker->text($maxNbChars = 30),
+            'summary' => $faker->text($maxNbChars = 100),
+            'text' => $faker->text($maxNbChars = 2000),
+            'image_path' => 'image10.jpg',
+            'category_id' => 2,
+            'owner_id' => 2,
+            'active' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
     }
 }

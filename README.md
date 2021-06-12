@@ -67,8 +67,11 @@ Sva instalacija se odvija unutar terminala u Ubuntu OS-u.
 1. Pokrenuti narebu `php artisan key:generate`
 1. Pokrenuti narebu `php artisan migrate --seed`
 1. Pokrenuti narebu `php artisan storage:link`
+1. Kopirati slike u javni direktorij `cp resources/images/image*.jpg public/storage`
    
 # Pokretanje aplikacije
 
 1. U direktoriju projekta pokrenuti narebu `php artisan serve`
 1. Unutar proizvoljnog web preglednika otvoriti URL aplikacije: http://127.0.0.1:8000
+1. Za pristup uređivanju artikala pojedinog korisnika ulogirati se kao `editor.user@site.com` s lozinkom `SuperDuperPassword`
+1. Za pristup uređivanju svih artikala i administraciji korisnika ulogirati se kao `admin.user@site.com` s lozinkom `SuperPassword`
