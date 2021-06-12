@@ -13,7 +13,7 @@ Na Windows 10 je moguće instalirati Ubuntu 20.04 koristeći
 
 Da bi se uspješno instalirala i pokrenula aplikacija potrebna je Internet veza.
 
-# Pokretanje aplikacije
+# Aplikacija
 
 ## Instalacija aplikacije
 
@@ -69,7 +69,7 @@ Sva instalacija se odvija unutar terminala u Ubuntu OS-u.
 1. Pokrenuti narebu `php artisan storage:link`
 1. Kopirati slike u javni direktorij `cp resources/images/image*.jpg public/storage`
    
-# Pokretanje aplikacije
+## Pokretanje aplikacije
 
 1. U direktoriju projekta pokrenuti narebu `php artisan serve`
 1. Unutar proizvoljnog web preglednika otvoriti URL aplikacije: http://127.0.0.1:8000
