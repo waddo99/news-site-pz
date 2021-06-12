@@ -18,7 +18,7 @@ class ArticleSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1,5) as $i) {
+        foreach (range(1,4) as $i) {
             $imagePath = 'image' . $i . '.jpg';
 
             DB::table('articles')->insert([
@@ -34,7 +34,21 @@ class ArticleSeeder extends Seeder
             ]);
         }
 
-        foreach (range(6,9) as $i) {
+        // Hidden article
+        DB::table('articles')->insert([
+            'title' => $faker->text($maxNbChars = 30),
+            'summary' => $faker->text($maxNbChars = 100),
+            'text' => $faker->text($maxNbChars = 2000),
+            'image_path' => 'image5.jpg',
+            'category_id' => 1,
+            'owner_id' => 1,
+            'active' => 0,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+
+        foreach (range(6,8) as $i) {
             $imagePath = 'image' . $i . '.jpg';
 
             DB::table('articles')->insert([
@@ -55,10 +69,23 @@ class ArticleSeeder extends Seeder
             'title' => $faker->text($maxNbChars = 30),
             'summary' => $faker->text($maxNbChars = 100),
             'text' => $faker->text($maxNbChars = 2000),
-            'image_path' => 'image10.jpg',
+            'image_path' => 'image9.jpg',
             'category_id' => 2,
             'owner_id' => 2,
             'active' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        // Hidden editor article
+        DB::table('articles')->insert([
+            'title' => $faker->text($maxNbChars = 30),
+            'summary' => $faker->text($maxNbChars = 100),
+            'text' => $faker->text($maxNbChars = 2000),
+            'image_path' => 'image10.jpg',
+            'category_id' => 2,
+            'owner_id' => 2,
+            'active' => 0,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

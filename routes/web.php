@@ -53,7 +53,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get(
-    '/article/{article}',
+    '/article/{article}/{force?}',
     [\App\Http\Controllers\ArticleController::class, 'show']
 )->name('article.show');
 

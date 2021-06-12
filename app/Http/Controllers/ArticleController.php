@@ -73,12 +73,18 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     * @param int $force
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $force = 0)
     {
-        $article = Article::with(['owner'])->where('id', $id)->where('active', 1)->first();
+        if($force == 1) {
+            $article = Article::with(['owner'])->where('id', $id)->first();
+        } else {
+            $article = Article::with(['owner'])->where('id', $id)->where('active', 1)->first();
+        }
+
         $isOwner = Auth::check() && ((Auth::user()->id == $article->owner_id) || (Auth::user()->role->first()->role === 'admin'));
 
         return view('article.show')->with(compact('article', 'isOwner'));
@@ -125,7 +131,12 @@ class ArticleController extends Controller
 
         $this->addToLog($article->id, Auth::user()->id, 'update', $this->formatRequest($request->all()));
 
-        return redirect()->route('article.show', ['article' => $article->id ])
+        if($article->active === 1) {
+            return redirect()->route('article.show', ['article' => $article->id ])
+                ->with('success', 'Article has been successfully updated.');
+        }
+
+        return redirect()->route('article.index')
             ->with('success', 'Article has been successfully updated.');
 
     }

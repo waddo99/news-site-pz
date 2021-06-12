@@ -29,6 +29,7 @@
                     <th width="10%">Created Date</th>
                     <th width="5%">Activity Status</th>
                     <th width="10%">Owner</th>
+                    <th width="5%">Preview</th>
                     <th width="5%">Edit</th>
                     <th width="5%">Delete</th>
                 </tr>
@@ -49,6 +50,10 @@
                             @endif
                         </td>
                         <td>{{$article->owner->name}}</td>
+                        <td>
+                            <a href="{{ route('article.show', [ 'article' => $article->id, 'force' => 1]) }}" class="btn btn-secondary form-control" title="Preview"><i
+                                    class="fas fa-search"></i> </a>
+                        </td>
                         <td>
                             <a href="{{ route('article.edit', [ 'article' => $article->id]) }}" class="btn btn-primary form-control" title="Edit"><i
                                     class="fas fa-edit"></i> </a>
